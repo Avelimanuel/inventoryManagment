@@ -30,8 +30,20 @@ const shadeMapping = {
 }
 
 const generateThemeObject = (colors:any,mapping:any, invert= false) =>{
+  const theme:any = {};
+  baseColors.forEach((color)=>{
+    theme[color] = {}
+    Object.entries(mapping).forEach(([key,value]:any) =>{
+        const shadeKey = invert ? value : key
+        theme[color][key] = colors[color][shadeKey]
+    })
+  })
+  return theme
 
 }
+
+const lightTheme = generateThemeObject(colors,shadeMapping)
+const darkTheme = generateThemeObject(colors,shadeMapping, true)
 
 const config: Config = {
   content: [
