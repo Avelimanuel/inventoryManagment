@@ -26,7 +26,11 @@ const shadeMapping = {
   '700':'200',
   '800':'100',
   '900':'50',
-  
+
+}
+
+const generateThemeObject = (colors:any,mapping:any, invert= false) =>{
+
 }
 
 const config: Config = {
