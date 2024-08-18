@@ -1,4 +1,33 @@
 import type { Config } from "tailwindcss";
+import {createThemes} from 'tw-colors'
+import colors from 'tailwindcss/colors'
+
+const baseColors = [
+  'blue',
+  'green',
+  'gray',
+  'red',
+  'yellow',
+  'purple',
+  'pink',
+  'orange',
+  'teal',
+  'indigo',
+];
+
+const shadeMapping = {
+  '50':'900',
+  '100':'800',
+  '200':'700',
+  '300':'600',
+  '400':'500',
+  '500':'400',
+  '600':'300',
+  '700':'200',
+  '800':'100',
+  '900':'50',
+  
+}
 
 const config: Config = {
   content: [
