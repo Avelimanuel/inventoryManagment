@@ -1,15 +1,24 @@
 "use client";
 import { useAppDispatch, useAppSelector } from "@/app/redux";
-import { setIsSidebarCollapsed } from "@/app/state";
-import { Bell, Menu, Settings, Sun } from "lucide-react";
+import { setIsSidebarCollapsed, setIsdarkMode } from "../../../app/state";
+import { Bell, Menu, Moon, Settings, Sun } from "lucide-react";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 
 const Navbar = () => {
+  // State to track if the icon is being hovered over
+  const [isHovered, setIsHovered] = useState(false);
+
   const dispatch = useAppDispatch();
   const isSideBarCollapsed = useAppSelector(
     (state) => state.global.isSideBarCollapsed
   );
+
+  const isDarkMode = useAppSelector((state) => state.global.isDarkMode);
+
+  const toggleDarkMode = () => {
+    dispatch(setIsdarkMode(!isDarkMode));
+  };
 
   const toggleSideBar = () => {
     dispatch(setIsSidebarCollapsed(!isSideBarCollapsed));
@@ -30,7 +39,7 @@ const Navbar = () => {
           <input
             type="search"
             placeholder="search groups and products"
-            className="pl-10 pr-4 py-2 w-50 md:w-80 border-2 border-gray-300 bg-white rounded-lg focus:outline-none focus:border-blue-500"
+            className="pl-10 pr-4 py-2 w-50 md:w-60 border-2 border-gray-300 bg-white rounded-lg focus:outline-none focus:border-blue-500"
           />
 
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -43,9 +52,28 @@ const Navbar = () => {
       <div className="flex justify-between items-center gap-5">
         <div className="hidden md:flex justify-between items-center">
           <div>
-            <button onClick={() => {}}>
-              <Sun className="cursor-pointer text-gray-500 " size={24} />
+            <button onClick={toggleDarkMode}>
+              {isDarkMode ? (
+                <Sun
+                  className="cursor-pointer text-gray-500"
+                  size={24}
+                  onMouseEnter={() => setIsHovered(true)}
+                  onMouseLeave={() => setIsHovered(false)}
+                />
+              ) : (
+                <Moon
+                  className="cursor-pointer text-gray-500 "
+                  size={24}
+                  onMouseEnter={() => setIsHovered(true)}
+                  onMouseLeave={() => setIsHovered(false)}
+                />
+              )}
             </button>
+            {isHovered && (
+              <div className="absolute top-8 left-1/2 transform -translate-x-1/2 bg-gray-200 text-gray-700 rounded px-2 py-1 text-sm">
+                {isDarkMode ? "Light Mode" : "Dark Mode"}
+              </div>
+            )}
           </div>
           <div className="relative">
             <Bell className="cursor-pointer text-gray-500" size={24} />
